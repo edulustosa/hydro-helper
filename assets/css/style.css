@@ -1,0 +1,141 @@
+* {
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+
+body {
+  min-width: 350px;
+  padding: 15px;
+  background-color: #212529;
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.nav {
+  margin-bottom: 15px;
+  font-size: 12px;
+}
+
+.nav-item {
+  cursor: pointer;
+}
+
+.nav-link,
+.nav-link:hover,
+.goal,
+.material-symbols-outlined {
+  color: lightskyblue;
+}
+
+.water-form {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-control,
+.form-select {
+  font-size: small;
+  width: 100px;
+}
+
+button {
+  background-color: #212529;
+  border: 1px solid #495057;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.add-btn,
+.notification-btn {
+  margin-left: 5px;
+  height: 30px;
+  width: 30px;
+}
+
+.remove-btn {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 10px;
+}
+
+.add-btn:hover,
+.notification-btn:hover {
+  background-color: lightskyblue;
+}
+
+.remove-btn:hover {
+  background-color: red;
+}
+
+.styled-icon {
+  color: white;
+  font-size: 15px;
+}
+
+.water-consumption {
+  margin-bottom: 15px;
+}
+
+.intake-information {
+  margin: 0px 5px 5px 0px;
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 5px;
+}
+
+.bottle {
+  font-size: 40px;
+}
+
+.bottle-lg {
+  font-size: 50px;
+}
+
+.water-quantity,
+.description {
+  font-size: 12px;
+}
+
+.goal-notification-area {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.water-goal {
+  font-size: 14px;
+}
+
+.user-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.user-weight {
+  width: 135px;
+}
+
+hr {
+  color: #646b72;
+}
+
+footer p {
+  margin: 0;
+  font-size: 10px;
+}
