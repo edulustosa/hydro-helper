@@ -147,7 +147,7 @@ function setIntakeSection() {
     }
   }
 
-  // Handles the removal of a water intake information node and related operations.
+  // Handles the removal of a water intake information node and related operations
   function handleRemove(node, intake) {
     const removeBtn = node.querySelector(".remove-btn");
 
@@ -165,14 +165,13 @@ function setIntakeSection() {
   }
 }
 
+// Update the user's goal
 function setGoalSection() {
   const goalSpan = document.querySelectorAll(".goal")[1];
   if (goal) goalSpan.innerHTML = `${goal}ml`;
 
   const userWeight = document.querySelector(".user-weight");
   const customGoal = document.querySelector(".custom-goal");
-
-  // Update the user's goal
 
   userWeight.addEventListener("input", () => {
     customGoal.value = "";
@@ -263,6 +262,7 @@ function handleNotif() {
     addHoverEffect();
   }
 
+  // Change the notification status
   notifBtn.addEventListener("click", () => {
     notifActive = !notifActive;
     saveNotif();
