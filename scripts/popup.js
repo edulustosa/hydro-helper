@@ -1,113 +1,114 @@
-verifyDate();
+verifyDate()
 
 // Parse localStorage data
-const waterIntake = JSON.parse(localStorage.getItem("intake"));
-let goal = Number(localStorage.getItem("goal")) || 0;
-let notifActive = JSON.parse(localStorage.getItem("notification")) || false;
+const waterIntake = JSON.parse(localStorage.getItem('intake'))
+let goal = Number(localStorage.getItem('goal')) || 0
+let notifActive = JSON.parse(localStorage.getItem('notification')) || false
 
-toggleTabs();
+toggleTabs()
 
 // Check if the current date differs from the stored date in localStorage
 function verifyDate() {
-  const today = new Date().getDate();
-  const storageDay = Number(localStorage.getItem("day"));
+  const today = new Date().getDate()
+  const storageDay = Number(localStorage.getItem('day'))
 
   if (!storageDay || today !== storageDay) {
-    localStorage.setItem("intake", JSON.stringify([]));
-    localStorage.setItem("day", today);
+    localStorage.setItem('intake', JSON.stringify([]))
+    localStorage.setItem('day', today)
   }
 }
 
 // Toggle functionality for intake and goal tabs
 function toggleTabs() {
-  setIntakeSection();
+  setIntakeSection()
 
-  const toggleIntake = document.querySelector(".intake-tab");
-  const toggleGoal = document.querySelector(".goal-tab");
+  const toggleIntake = document.querySelector('.intake-tab')
+  const toggleGoal = document.querySelector('.goal-tab')
 
-  const intakeSection = document.querySelector(".intake-section");
-  const goalSection = document.querySelector(".goal-section");
-  let tabActive = false;
+  const intakeSection = document.querySelector('.intake-section')
+  const goalSection = document.querySelector('.goal-section')
+  let tabActive = false
 
-  toggleIntake.addEventListener("click", () => {
-    toggleGoal.classList.remove("active");
-    toggleIntake.classList.add("active");
+  toggleIntake.addEventListener('click', () => {
+    toggleGoal.classList.remove('active')
+    toggleIntake.classList.add('active')
 
-    goalSection.classList.add("hidden");
-    intakeSection.classList.remove("hidden");
+    goalSection.classList.add('hidden')
+    intakeSection.classList.remove('hidden')
 
-    updateGoalSpan();
-  });
+    updateGoalSpan()
+  })
 
-  toggleGoal.addEventListener("click", () => {
-    toggleIntake.classList.remove("active");
-    toggleGoal.classList.add("active");
+  toggleGoal.addEventListener('click', () => {
+    toggleIntake.classList.remove('active')
+    toggleGoal.classList.add('active')
 
-    intakeSection.classList.add("hidden");
-    goalSection.classList.remove("hidden");
+    intakeSection.classList.add('hidden')
+    goalSection.classList.remove('hidden')
 
     if (!tabActive) {
-      setGoalSection();
-      tabActive = true;
+      setGoalSection()
+      tabActive = true
     }
-  });
+  })
 }
 
 function setIntakeSection() {
   // Add water intake from localStorage
   if (waterIntake) {
-    for (let intake of waterIntake) addNewIntake(intake);
-    updateGoalSpan();
+    for (let intake of waterIntake) addNewIntake(intake)
+    updateGoalSpan()
+    goalAchieved()
   }
 
-  handleNotif();
+  handleNotif()
 
-  const selectMl = document.querySelector(".select-ml");
-  const customMl = document.querySelector(".custom-ml");
-  const waterForm = document.querySelector("form");
-  let ml = 0;
+  const selectMl = document.querySelector('.select-ml')
+  const customMl = document.querySelector('.custom-ml')
+  const waterForm = document.querySelector('form')
+  let ml = 0
 
-  selectMl.addEventListener("input", () => {
-    customMl.value = "";
-    ml = Number(selectMl.value);
-  });
+  selectMl.addEventListener('input', () => {
+    customMl.value = ''
+    ml = Number(selectMl.value)
+  })
 
-  customMl.addEventListener("input", () => {
-    selectMl.selectedIndex = 0;
-    formatInput(customMl);
-    ml = Number(customMl.value);
-  });
+  customMl.addEventListener('input', () => {
+    selectMl.selectedIndex = 0
+    formatInput(customMl)
+    ml = Number(customMl.value)
+  })
 
-  waterForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  waterForm.addEventListener('submit', (e) => {
+    e.preventDefault()
 
     if (ml) {
-      waterIntake.push(ml);
+      waterIntake.push(ml)
 
-      saveIntake();
+      saveIntake()
 
-      addNewIntake(ml);
+      addNewIntake(ml)
 
-      updateGoalSpan();
+      updateGoalSpan()
 
-      goalAchieved();
+      goalAchieved()
 
-      createAlarm();
+      createAlarm()
     }
-  });
+  })
 
   // Add water intake to the UI
   function addNewIntake(intake) {
-    const waterInfoHTML = addWaterInfo(intake);
-    const waterConsumption = document.querySelector(".water-consumption");
+    const waterInfoHTML = addWaterInfo(intake)
+    const waterConsumption = document.querySelector('.water-consumption')
 
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = waterInfoHTML;
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = waterInfoHTML
 
-    const waterInfoNode = tempDiv.firstElementChild;
-    handleRemove(waterInfoNode, intake);
+    const waterInfoNode = tempDiv.firstElementChild
+    handleRemove(waterInfoNode, intake)
 
-    waterConsumption.appendChild(waterInfoNode);
+    waterConsumption.appendChild(waterInfoNode)
   }
 
   // Generates HTML markup for displaying water intake information based on the provided ml
@@ -121,7 +122,7 @@ function setIntakeSection() {
             <span class="material-symbols-outlined remove-icon styled-icon"> remove </span>
           </button>
         </div>
-      `;
+      `
     } else if (ml < 1000) {
       return `
         <div class="intake-information">
@@ -131,7 +132,7 @@ function setIntakeSection() {
             <span class="material-symbols-outlined remove-icon styled-icon"> remove </span>
           </button>
         </div>
-      `;
+      `
     } else {
       return `
         <div class="intake-information">
@@ -143,176 +144,181 @@ function setIntakeSection() {
             <span class="material-symbols-outlined remove-icon styled-icon"> remove </span>
           </button>
         </div>
-      `;
+      `
     }
   }
 
   // Handles the removal of a water intake information node and related operations
   function handleRemove(node, intake) {
-    const removeBtn = node.querySelector(".remove-btn");
+    const removeBtn = node.querySelector('.remove-btn')
 
-    removeBtn.addEventListener("click", () => {
-      waterIntake.splice(waterIntake.indexOf(intake), 1);
+    removeBtn.addEventListener('click', () => {
+      waterIntake.splice(waterIntake.indexOf(intake), 1)
 
-      saveIntake();
+      saveIntake()
 
-      node.remove();
+      node.remove()
 
-      updateGoalSpan();
+      updateGoalSpan()
 
-      createAlarm();
-    });
+      createAlarm()
+    })
   }
 }
 
 // Update the user's goal
 function setGoalSection() {
-  const goalSpan = document.querySelectorAll(".goal")[1];
-  if (goal) goalSpan.innerHTML = `${goal}ml`;
+  const goalSpan = document.querySelectorAll('.goal')[1]
+  if (goal) goalSpan.innerHTML = `${goal}ml`
 
-  const userWeight = document.querySelector(".user-weight");
-  const customGoal = document.querySelector(".custom-goal");
+  const userWeight = document.querySelector('.user-weight')
+  const customGoal = document.querySelector('.custom-goal')
 
-  userWeight.addEventListener("input", () => {
-    customGoal.value = "";
-    formatInput(userWeight, true);
+  userWeight.addEventListener('input', () => {
+    customGoal.value = ''
+    formatInput(userWeight, true)
 
     if (userWeight.value) {
-      const weight = Number(userWeight.value);
-      goal = Math.round(weight * 40);
-      goalSpan.innerHTML = `${goal}ml`;
+      const weight = Number(userWeight.value)
+      goal = Math.round(weight * 40)
+      goalSpan.innerHTML = `${goal}ml`
     } else {
-      goalSpan.innerHTML = "--";
-      goal = 0;
+      goalSpan.innerHTML = '--'
+      goal = 0
     }
 
-    saveGoal();
-  });
+    saveGoal()
+  })
 
-  customGoal.addEventListener("input", () => {
-    userWeight.value = "";
-    formatInput(customGoal);
+  customGoal.addEventListener('input', () => {
+    userWeight.value = ''
+    formatInput(customGoal)
 
     if (customGoal.value) {
-      goal = Number(customGoal.value);
-      goalSpan.innerHTML = `${goal}ml`;
+      goal = Number(customGoal.value)
+      goalSpan.innerHTML = `${goal}ml`
     } else {
-      goalSpan.innerHTML = "--";
-      goal = 0;
+      goalSpan.innerHTML = '--'
+      goal = 0
     }
 
-    saveGoal();
-  });
+    saveGoal()
+    goalAchieved()
+  })
 }
 
 // Display the user's current water intake and their goal
 function updateGoalSpan() {
-  const goalSpan = document.querySelectorAll(".goal")[0];
-  const sumIntake = waterIntake.reduce((sum, ml) => sum + ml, 0);
+  const goalSpan = document.querySelectorAll('.goal')[0]
+  const sumIntake = waterIntake.reduce((sum, ml) => sum + ml, 0)
 
   if (goal) {
-    goalSpan.innerHTML = `${sumIntake}ml / ${goal}ml`;
+    goalSpan.innerHTML = `${sumIntake}ml / ${goal}ml`
   } else {
-    goalSpan.innerHTML = `${sumIntake}ml / --`;
+    goalSpan.innerHTML = `${sumIntake}ml / --`
   }
 }
 
 function saveIntake() {
-  localStorage.setItem("intake", JSON.stringify(waterIntake));
+  localStorage.setItem('intake', JSON.stringify(waterIntake))
 }
 
 function saveGoal() {
-  localStorage.setItem("goal", goal);
+  localStorage.setItem('goal', goal)
 }
 
 function createAlarm() {
-  cancelAlarm();
+  cancelAlarm()
 
   if (!goalAchieved() && notifActive) {
-    chrome.alarms.create("Drink Water", {
+    chrome.alarms.create('Drink Water', {
       delayInMinutes: 90,
       periodInMinutes: 90,
-    });
+    })
   }
 }
 
 function cancelAlarm() {
-  chrome.alarms.clear("Drink Water");
+  chrome.alarms.clear('Drink Water')
 }
 
 // Checks if the goal is achieved based on current intake and goal data
 function goalAchieved() {
-  const sumIntake = waterIntake.reduce((sum, ml) => sum + ml, 0);
+  const sumIntake = waterIntake.reduce((sum, ml) => sum + ml, 0)
+  const goalMessage = document.querySelector('.goal-achieved')
+  console.log(goalMessage)
+
   if (sumIntake >= goal) {
-    cancelAlarm();
-    return true;
+    goalMessage.classList.remove('hidden')
+    cancelAlarm()
+  } else {
+    goalMessage.classList.add('hidden')
   }
-  return false;
 }
 
 function handleNotif() {
-  const notifBtn = document.querySelector(".notification-btn");
-  const notifIconOff = document.querySelector(".notifications_off");
-  const notifIconActive = document.querySelector(".notifications_active");
+  const notifBtn = document.querySelector('.notification-btn')
+  const notifIconOff = document.querySelector('.notifications_off')
+  const notifIconActive = document.querySelector('.notifications_active')
 
   if (notifActive) {
-    createAlarm();
-    removeHoverEffect();
+    createAlarm()
+    removeHoverEffect()
   } else {
-    addHoverEffect();
+    addHoverEffect()
   }
 
   // Change the notification status
-  notifBtn.addEventListener("click", () => {
-    notifActive = !notifActive;
-    saveNotif();
+  notifBtn.addEventListener('click', () => {
+    notifActive = !notifActive
+    saveNotif()
 
     if (notifActive) {
-      createAlarm();
-      removeHoverEffect();
+      createAlarm()
+      removeHoverEffect()
     } else {
-      cancelAlarm();
-      addHoverEffect();
+      cancelAlarm()
+      addHoverEffect()
     }
-  });
+  })
 
   function saveNotif() {
-    localStorage.setItem("notification", JSON.stringify(notifActive));
+    localStorage.setItem('notification', JSON.stringify(notifActive))
   }
 
   function addHoverEffect() {
-    notifBtn.addEventListener("mouseover", handleMouseOver);
-    notifBtn.addEventListener("mouseout", handleMouseOut);
-    notifBtn.style.backgroundColor = "";
+    notifBtn.addEventListener('mouseover', handleMouseOver)
+    notifBtn.addEventListener('mouseout', handleMouseOut)
+    notifBtn.style.backgroundColor = ''
   }
 
   function removeHoverEffect() {
-    notifBtn.removeEventListener("mouseover", handleMouseOver);
-    notifBtn.removeEventListener("mouseout", handleMouseOut);
-    handleMouseOver();
-    notifBtn.style.backgroundColor = "lightskyblue";
+    notifBtn.removeEventListener('mouseover', handleMouseOver)
+    notifBtn.removeEventListener('mouseout', handleMouseOut)
+    handleMouseOver()
+    notifBtn.style.backgroundColor = 'lightskyblue'
   }
 
   function handleMouseOver() {
-    notifIconOff.classList.add("hidden");
-    notifIconActive.classList.remove("hidden");
+    notifIconOff.classList.add('hidden')
+    notifIconActive.classList.remove('hidden')
   }
 
   function handleMouseOut() {
-    notifIconOff.classList.remove("hidden");
-    notifIconActive.classList.add("hidden");
+    notifIconOff.classList.remove('hidden')
+    notifIconActive.classList.add('hidden')
   }
 }
 
 // Formats user input to allow only numerical values
 function formatInput(input, point = false) {
   if (point) {
-    input.value = input.value.replace(/[^0-9.]/g, "");
+    input.value = input.value.replace(/[^0-9.]/g, '')
 
     if ((input.value.match(/\./g) || []).length > 1) {
-      input.value = input.value.substring(0, input.value.lastIndexOf("."));
+      input.value = input.value.substring(0, input.value.lastIndexOf('.'))
     }
   } else {
-    input.value = input.value.replace(/[^0-9]/g, "");
+    input.value = input.value.replace(/[^0-9]/g, '')
   }
 }

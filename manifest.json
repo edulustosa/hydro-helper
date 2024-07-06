@@ -13,7 +13,7 @@
     "default_icon": "assets/images/water-bottle-32.png",
     "default_title": "HydroHelper"
   },
-  "permissions": ["storage", "notifications", "alarms"],
+  "permissions": ["notifications", "alarms"],
   "background": {
     "service_worker": "scripts/background.js"
   }
