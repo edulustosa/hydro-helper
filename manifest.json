@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "HydroHelper",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "A browser extension to keep track of your water consumption",
   "icons": {
     "16": "assets/images/water-bottle-16.png",
